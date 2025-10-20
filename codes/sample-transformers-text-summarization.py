@@ -1,6 +1,11 @@
 from transformers import pipeline
 
-summarizer = pipeline("summarization")
+MODEL_NAME = "facebook/bart-large-cnn"
+
+# 1. 요약 파이프라인 로드
+summarizer = pipeline("summarization", model=MODEL_NAME)
+
+# 2. 요약할 샘플 텍스트
 text = """그립다 그리워
 그립다 그리워
 그립다 그리워
@@ -84,5 +89,8 @@ text = """그립다 그리워
 그립다 그리워 그립다 그리워
 왕밤빵 왕밤빵 왕밤빵 왕밤빵 왕밤빵 왕밤빵"""
 
-summary = summarizer(text)
+# 3. 요약 실행
+summary = summarizer(text, max_length=200, min_length=10, do_sample=False)
+
+# 4. 결과 출력
 print(summary[0]['summary_text'])
